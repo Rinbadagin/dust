@@ -5,6 +5,13 @@ import numpy
 from PIL import Image
 
 digs = string.digits + string.ascii_letters
+# note 0th lambda is used by default when no lambda is provided
+# also note reliance on custom array should depend on the order the lambdas are provided
+# as the array cannot be accessed before its been generated
+demo_lambdas = [lambda n, custom_arrays, x, y: (math.fabs(n) % 1) * 255,
+                lambda n, custom_arrays, x, y: (((n*custom_arrays[0][x,y])*255)%255),
+                lambda n, custom_arrays, x, y: (n*1024)%255,
+                lambda n, custom_arrays, x, y: ((255-custom_arrays[1][x,y])*n)%255]
 
 
 def get_custom_arrays_from_noise(noise_arrays, funcs):
@@ -12,7 +19,7 @@ def get_custom_arrays_from_noise(noise_arrays, funcs):
         Inputs: noise array(s), function array - size of output array will be the max of noise and lambda array length
         Outputs array(s) of noise-based information. Can be used for colour or further modified
         Functions must take 4 arguments, a noise array, the previously computed custom arrays, and the current x
-        and y values in the loop
+        and y values in the loop. Output is the intensity of the output for that coordinate.
     """
     custom_arrays = []
     for i in range(len(funcs)):
@@ -21,7 +28,7 @@ def get_custom_arrays_from_noise(noise_arrays, funcs):
             col_array = numpy.zeros(noise_arrays[i % len(noise_arrays)].shape)
             for x in range(noise_arrays[i % len(noise_arrays)].shape[0]):
                 for y in range(noise_arrays[i % len(noise_arrays)].shape[1]):
-                    col_array[x, y] = noise_arrays[i % len(noise_arrays)][x, y] * 255
+                    col_array[x, y] = demo_lambdas[0](noise_arrays[i % len(noise_arrays)][x, y], custom_arrays, x, y)
             custom_arrays.append(col_array)
         else:
             col_array = numpy.zeros(noise_arrays[i % len(noise_arrays)].shape)

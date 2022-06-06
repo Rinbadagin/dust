@@ -7,7 +7,6 @@ from image import ImageUtils
 from image.ImageUtils import merge_images
 from noise.NoiseGenerator import NoiseGenerator
 
-
 class ImageGenerator:
     def __init__(self, dimensions=(64, 64)):
         self.image = Image.new(mode="RGB", size=dimensions)
@@ -33,12 +32,10 @@ class ImageGenerator:
         working_image = self.image.copy()
         pixels = working_image.load()
 
-        r_lambda = lambda n, custom_arrays, x, y: (math.sqrt((custom_arrays[0][x, y] ** -1) + ((n * 255) ** 2)) % 255)
-
-        r_array, g_array, b_array = ImageUtils.get_custom_arrays_from_noise([noise_array],
+        r_array, b_array, g_array = ImageUtils.get_custom_arrays_from_noise([noise_array],
                 [0,
                  0,
-                 r_lambda])
+                 ImageUtils.demo_lambdas[3]])
 
         for x in range(self.image.size[0]):
             for y in range(self.image.size[1]):
