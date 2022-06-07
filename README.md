@@ -4,12 +4,12 @@ It utilises the PyPi module pyfastnoisesimd, the Python Imaging Library (PIL), n
 # To run:
 1. Clone this repository 
 2. Install the pip modules "pyfastnoisesimd" and "PIL" (of course a virtual environment can be used), and
-3. Run main.py with a recent version of python 3 (`$ python3 main.py`)
+3. Run demo_main.py with a recent version of python 3 (`$ python3 demo_main.py`)
 
 # To fiddle:
 If you're looking to mess around with this I'm afraid you'll have to look at the source. I haven't made any proper documentation.
 There will be comments, but I give no guarantee that they will be up-to-date or even relevant at all so expect to delve into the source ;)
-To get started it is good to know that the provided main.py should work out of the box - if it doesn't your environment is incorrectly configured.
+To get started it is good to know that the provided demo_main.py should work out of the box - if it doesn't your environment might be incorrectly configured.
 
 # Sample Images
 The LandFilter is currently the only filter used in this section and the conditions used to generate each respective image are lost to time :)

@@ -15,18 +15,14 @@ from time import time_ns
 
 identifier = time_ns()
 
-
-def main():
-    n_g1 = LayeredNoiseGenerator(layers=6, seed=identifier, noise_type=fns.NoiseType.Perlin, frequency=0.0001)
-    i_g = ImageGenerator(dimensions=(1024, 1024))
-    i_g.populate_image(n_g1.get_noise(seed=identifier, dimensions=(1024, 1024)), lambda_array=demo_lambda_arrays[1])
-    i_f = ImageFilter(sampling_rate=2)
-    i_g.image.save(f"past/img-{identifier}-raw.png")
-    i_f.filter(i_g.image).show()
-
+# TODO: Change filters to manipulators. Even the base imagefilter class doesnt just filter
+# all it does is scale by 1/sampling_rate
 
 def demo_main():
-    n_g = NoiseGenerator(seed=(identifier - 42) % 2 ** 31,
+    """This demo function exists to provide an example of valid image generation.
+    By default, when run it will produce and show two images.
+    One is a full-size mosaic and the other is the same mosaic but primitively scaled down by a factor of 4."""
+    n_g = LayeredNoiseGenerator(seed=(identifier - 42) % 2 ** 31,
                          n_threads=64,
                          noise_type=fns.NoiseType.Simplex,
                          frequency=0.0005,
@@ -38,7 +34,6 @@ def demo_main():
     i_g.populate_image(n_g.get_noise(seed=identifier + 1337,
                                      dimensions=(256, 256)))
     i_g.image.save(f"past/img-{identifier}-singular.png")
-    i_g.image.show()
     i_g.generate_mosaic(noise_generator=n_g,
                         seed=identifier,
                         mosaic_side_length=3,
@@ -50,4 +45,4 @@ def demo_main():
 
 
 if __name__ == "__main__":
-    main()
+    demo_main()
