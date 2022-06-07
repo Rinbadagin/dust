@@ -9,9 +9,16 @@ digs = string.digits + string.ascii_letters
 # also note reliance on custom array should depend on the order the lambdas are provided
 # as the array cannot be accessed before its been generated
 demo_lambdas = [lambda n, custom_arrays, x, y: (math.fabs(n) % 1) * 255,
-                lambda n, custom_arrays, x, y: (((n*custom_arrays[0][x,y])*255)%255),
-                lambda n, custom_arrays, x, y: (n*1024)%255,
-                lambda n, custom_arrays, x, y: ((255-custom_arrays[1][x,y])*n)%255]
+                lambda n, custom_arrays, x, y: (((n * custom_arrays[0][x, y]) * 255) % 255),
+                lambda n, custom_arrays, x, y: (n * 1024) % 255,
+                lambda n, custom_arrays, x, y: ((255 - custom_arrays[1][x, y]) * n) % 255]
+
+demo_lambda_arrays = [
+    [0, 0, 0],
+    [0,
+     demo_lambdas[2],
+     demo_lambdas[3]]
+]
 
 
 def get_custom_arrays_from_noise(noise_arrays, funcs):

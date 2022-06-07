@@ -13,6 +13,7 @@ class NoiseGenerator:
         self.noise.fractal.lacunarity = lacunarity
         self.noise.fractal.gain = gain
         self.noise.perturb.perturbType = self.perturb_type = perturb_type
+        self.noise.cell.distanceFunc=fns.CellularDistanceFunction.Natural
 
     def get_noise(self, seed="unset", dimensions=(32, 32), start=(0, 0), debug=False):
         """Provides noise for given array and start position."""

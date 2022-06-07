@@ -4,11 +4,12 @@ Basically a toolkit for me to make cool images with noise. Really surprised anyo
 Written by Rinbadagin, Jun 5 2022. Rewrite of previous spaghetti.
 Not made with ease of understanding in mind or loads of comments so if you try and puzzle this then good luck.
 """
-from image.BrownFilter import BrownFilter
+from image.LandFilter import LandFilter
 from noise.LayeredNoiseGenerator import LayeredNoiseGenerator
 from noise.NoiseGenerator import NoiseGenerator
 from image.ImageGenerator import ImageGenerator
 from image.ImageFilter import ImageFilter
+from image.ImageUtils import *
 import pyfastnoisesimd as fns
 from time import time_ns
 
@@ -16,12 +17,12 @@ identifier = time_ns()
 
 
 def main():
-    n_g1 = LayeredNoiseGenerator(layers=7, seed=identifier, noise_type=fns.NoiseType.Cubic, frequency=0.0001)
+    n_g1 = LayeredNoiseGenerator(layers=6, seed=identifier, noise_type=fns.NoiseType.Perlin, frequency=0.0001)
     i_g = ImageGenerator(dimensions=(1024, 1024))
-    i_g.populate_image(n_g1.get_noise(seed=identifier, dimensions=(512, 512)))
-    b_f = BrownFilter(sampling_rate=1)
-    b_f.filter(i_g.image).show()
-    i_g.image.show()
+    i_g.populate_image(n_g1.get_noise(seed=identifier, dimensions=(1024, 1024)), lambda_array=demo_lambda_arrays[1])
+    i_f = ImageFilter(sampling_rate=2)
+    i_g.image.save(f"past/img-{identifier}-raw.png")
+    i_f.filter(i_g.image).show()
 
 
 def demo_main():

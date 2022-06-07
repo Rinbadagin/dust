@@ -17,7 +17,7 @@ class LayeredNoiseGenerator(NoiseGenerator):
             # note this line means that the output values wont always be between -1 and 1, range is then -2 to +2
             # which means that the default lambda will not deal with this normally resulting in disjointed spots at
             # high/low values
-            noise_arrays.append(((super(LayeredNoiseGenerator, self).get_noise(seed=seed * i, dimensions=dimensions)) / ((i+4)/2)))
+            noise_arrays.append(((super(LayeredNoiseGenerator, self).get_noise(seed=seed * i, dimensions=dimensions)) / ((i*2)+1)))
         self.noise = original_noise_obj
         noise_array = noise_arrays[0]
         for i in range(len(noise_arrays) - 1):
